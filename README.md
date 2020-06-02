@@ -1,7 +1,7 @@
 
 # Timer Generator
 
-Logic to define and launch Timers from ObjectScript methods/routines. The Timers will be signal a defined process with a particular token each X milliseconds.
+Logic to define and launch Timers from ObjectScript methods/routines. The Timers will signal a defined process with a particular token each X milliseconds.
 
 This functionality can be easily integrated in our logic using the %SYSTEM.Event framework in InterSystems IRIS. Since each Timer will be an event defined against a particular process, we can implement the logic of that process to act in a different way depending on the Token with which the process has been waken-up.
 
@@ -26,9 +26,13 @@ Let's show it with a very simple example:
             #dim tPeriodMillisec as %Integer = 1000
             #dim tToken as %String = "BASICTOKEN001"
 
-            do $system.Event.Clear($JOB)
+            do $system.Event.Clear($JOB)  //Eliminates whatever signal pending for this process
+
+            // Define & Launch the Timer(s). tTimer will store the PID of the timer process. It can be passed by reference
+            // If tTimer already exist and has free slots, it will be used, if not, a new one will be launched.
             set tTimer = ##class(OPNLib.IoT.Timer).Subscribe(.tTimer,$JOB,,tPeriodMillisec,tEndMsg)
 
+            // Wait and act when it receives something... till tStop is true
             while (tTimer>0)&&''tStop
             {
                 set tListOfData = $system.Event.WaitMsg()

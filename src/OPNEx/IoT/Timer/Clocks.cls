@@ -25,7 +25,7 @@ Property TkSep As %String [ InitialExpression = ":" ];
 Property Map As %String [ MultiDimensional ];
 
 /// Clocks Sample will initiate a Clock that will stop after pClockTime seconds, a CountDown of pCountDown seconds and a Cronometer that will finish after pCronometer
-ClassMethod ClocksSample(pClockTime As %Integer = 60, pCDTime As %Integer = 20, pCronoTime As %Integer = 10) As %Status
+ClassMethod Test(pClockTime As %Integer = 60, pCDTime As %Integer = 20, pCronoTime As %Integer = 10) As %Status
 {
 	#dim tClockSet as OPNEx.IoT.Timer.Clocks = ..%New()
 	#dim tTkSep as %String = tClockSet.TkSep
@@ -47,6 +47,8 @@ ClassMethod ClocksSample(pClockTime As %Integer = 60, pCDTime As %Integer = 20, 
 	set tClockSet.CronometerTimer = ##class(OPNLib.IoT.Timer).Subscribe(.tTimer,$JOB,"TMCRONOMETER",100)
 	set tClockSet.AdminTimer = ##class(OPNLib.IoT.Timer).Subscribe(.tTimer,$JOB,tClockSet.AdminSignal,10000,tTkSep_tClockSet.AdminEndToken)
 	
+	// Initialize data for each Task: CLOCK, COUNTDOWN, CRONOMETER and ADMIN
+	// This depends totally on the logic that we decide to implement
 	set tClockSet.Map("TMCLOCK","init")=$piece($h,",",2)
 	set tClockSet.Map("TMCLOCK","val")= $piece($h,",",2)
 	set tClockSet.Map("TMCLOCK","method")="Clock"
@@ -70,6 +72,17 @@ ClassMethod ClocksSample(pClockTime As %Integer = 60, pCDTime As %Integer = 20, 
 	set tClockSet.CronometerTimer = ##class(OPNLib.IoT.Timer).UnSubscribe(tClockSet.CronometerTimer,$JOB,"TMCRONOMETER")
 	set tClockSet.AdminTimer = ##class(OPNLib.IoT.Timer).UnSubscribe(tClockSet.AdminTimer,$JOB,tClockSet.AdminSignal)
 	quit
+}
+
+/// Stop all subscriptions for this sample. Asssuming default names for the signals
+ClassMethod StopTest()
+{
+	// Assumes no other JOB is executing under this TokenID. It will unsubscribe all Timer entries with this pTokenID
+	do ##class(OPNLib.IoT.Timer).UnSubscribe(,,"TMCLOCK")
+    do ##class(OPNLib.IoT.Timer).UnSubscribe(,,"TMCOUNTDOWN")
+    do ##class(OPNLib.IoT.Timer).UnSubscribe(,,"TMCRONOMETER")
+    do ##class(OPNLib.IoT.Timer).UnSubscribe(,,"TM-ADMIN")
+    quit
 }
 
 /// It keeps Waiting for signals for ever of till a pEndToken for a particular pCtrlSignal is received

@@ -2,7 +2,7 @@ Class OPNEx.IoT.Timer.SimplePeriodicTask Extends %RegisteredObject
 {
 
 /// Set a timer for executing the Dummy task, with default values (period or 1 second) and a closing token to stop it manually.
-ClassMethod Execute(pTimeLapse As %Integer = 20)
+ClassMethod Test(pTimeLapse As %Integer = 20)
 {
 	#dim tTimer as %Integer = ##class(OPNLib.IoT.Timer).GetTimerFree()
 	#dim tStop as %Integer=0

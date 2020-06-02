@@ -27,17 +27,17 @@ Property Map As %String [ MultiDimensional ];
 /// Parent process could get the PID of this with $ZCHILD... 
 /// also, if it passes a pToken and waits, it'll receive an event with msg starting with that token and the JOB of child process
 /// Parent process should keep control of PID of child process to stop the subscriptions if associated to that process if required
-ClassMethod BGLaunch(pTasks As %Integer = 4, pToken As %String = "")
+ClassMethod BGTest(pTasks As %Integer = 4, pToken As %String = "")
 {
 	set tSample = ..%New()
-	do tSample.LaunchSample(pTasks,pToken)
+	do tSample.Test(pTasks,pToken)
 }
 
 /// Sample method to distribute pTasks that will run each 500, 1000, 2000, 4000,.. milliseconds
 /// It will look for active Timers and assign the tasks as it finds them. 
 /// If no Timer is found or there are tasks pending to assign it'll launch the subscription which 
 /// will creates Timers as needed
-Method LaunchSample(pTasks As %Integer = 4, pToken As %String = "") As %Status
+Method Test(pTasks As %Integer = 4, pToken As %String = "") As %Status
 {
 	#dim tTaskNum, tCnt, tSlots, tTimer as %Integer=0
 	#dim tTaskLabel as %String=""
