@@ -60,11 +60,11 @@ You can see all the doc of main methods within the source code in more detail if
 
 Method | Description
 -------------|-----------------------
-Start()| It initiates a new Timer. If succeeds, it will return the PID associated to the Timer 
+Start()| It initiates a new Timer. If succeeds, it will return the PID associated to the Timer
 Stop(pTimer)| It stops the pTimer and UnSubscribe all the signals that is serving (if any)
 StopAll()| It stops all the Timers running on this system, unsubscribing all their signals assigned. It will prompt before proceeding.
 Subscribe(pTimer,pSubscriber,pToken,pPeriod,pEndMsg)| It will subscribe to pTimer the pair pSubscriber-pToken with a wake-up pPeriod and a pEndMsg to signaling unsubscription
-UnSubscribe(pTimer,pSubscriber,pToken)| Whatever argument not indicated when calling this method is interpreted as "ALL" \[Timers|Subscribers|Tokens]
+UnSubscribe(pTimer,pSubscriber,pToken)| Whatever argument not indicated when calling this method is interpreted as "ALL" \[Timers\|Subscribers\|Tokens\]
 GetTimerFree(.pSlots)| It returns a positive integer with the PID of the first timer with free slots and will update pSlots with the number of free slots available in that Timer
 Timers(pVerbose)| Returns a LIST with all the Timers currently active in the system. If pVerbose = 1, then it displays the list to the output device
 
