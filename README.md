@@ -7,7 +7,32 @@ This functionality can be easily integrated in our logic using the %SYSTEM.Event
 
 ## Install
 
-Just load an compile the class `OPNLib.IoT.Timer`. If you want to look at some examples, also load and compile the `OPNEx.IoT.Timer.*`classes. There you have several examples and approaches to leverage this functionality.
+### Local IRIS instance
+
+Just load an compile the class `OPNLib.IoT.Timer`. 
+
+`do $system.OBJ.Load("<yourpathtofile.xml"","ck">)`
+
+If you want to look at some examples, also load and compile the `OPNEx.IoT.Timer.*`classes. There you have several examples and approaches to leverage this functionality.
+
+### Containers
+
+Clone/git pull the repo into any local directory
+
+`$ git clone https://github.com/your-repository.git`
+
+Open the terminal in this directory and run:
+
+`$ docker-compose up -d`
+
+### Pakage Manager
+
+Be sure the ObjectScript Package Manager client is installed in your instance. Then execute:
+
+```objectscript
+    USER> zpm
+    zpm: USER> install opnlib-timer
+```
 
 ## How does it work?
 
@@ -54,6 +79,15 @@ As you can see, you don't need to set anything up to start using Timers. Just ca
 
 (\*) If there are already Timers available with free slots, then that Timer will be taken to also serve this subscription
 
+## Test
+
+You have several sample classes in package `OPNEx.IoT.Timer`. Just execute:
+
+`do ##class(OPNEx.IoT.Timer.Basic).Test()` to see the sample above working
+`do ##class(OPNEx.IoT.Timer.Clocks).Test()` to see a clock, counter and count-down working together
+`do ##class(OPNEx.IoT.Timer.SimplePeriodicTask).Test()` to run the most simple test ever
+`do ##class(OPNEx.IoT.Timer.Sample).Test()` to see a sample that launches 4 or more timers that could be associated to different tasks
+
 ## Basic Actions/Methods
 
 You can see all the doc of main methods within the source code in more detail if you're interested. Here you have below what you really need to work with this functionality
@@ -70,7 +104,7 @@ Timers(pVerbose)| Returns a LIST with all the Timers currently active in the sys
 
 ---
 
-## Behind the scene
+## Behind the scenes
 
 ### Default Sizing Configuration
 
