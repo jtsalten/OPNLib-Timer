@@ -70,7 +70,7 @@ Timers(pVerbose)| Returns a LIST with all the Timers currently active in the sys
 
 ---
 
-## Behind the scene
+## Behind the scenes
 
 ### Default Sizing Configuration
 
