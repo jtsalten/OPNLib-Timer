@@ -50,7 +50,7 @@ Let's show it with a very simple example:
     }
 ```
 
-As you can see, you don't need to set anything up to start using Timers. Just call Subscribe and, if it doesn't exist(\*), a new *tTimer* will be assigned for that $JOB-Token. The just created timer will start signaling that $JOB inmediately each *tPeriodMillisec*.
+As you can see, you don't need to set anything up to start using Timers. Just call `Subscribe()` and, if it doesn't exist(\*), a new *tTimer* will be assigned for that $JOB-Token. The just created timer will start signaling that $JOB inmediately each *tPeriodMillisec*.
 
 (\*) If there are already Timers available with free slots, then that Timer will be taken to also serve this subscription
 
