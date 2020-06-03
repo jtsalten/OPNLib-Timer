@@ -7,15 +7,39 @@ This functionality can be easily integrated in our logic using the %SYSTEM.Event
 
 ## Install
 
-Just load an compile the class `OPNLib.IoT.Timer`. If you want to look at some examples, also load and compile the `OPNEx.IoT.Timer.*`classes. There you have several examples and approaches to leverage this functionality.
+### Local IRIS instance
 
+Just load an compile the class `OPNLib.IoT.Timer`. 
+
+`do $system.OBJ.Load("<yourpathtofile.xml"","ck">)`
+
+If you want to look at some examples, also load and compile the `OPNEx.IoT.Timer.*`classes. There you have several examples and approaches to leverage this functionality.
+
+### Containers
+
+Clone/git pull the repo into any local directory
+
+`$ git clone https://github.com/your-repository.git`
+
+Open the terminal in this directory and run:
+
+`$ docker-compose up -d`
+
+### Pakage Manager
+
+Be sure the ObjectScript Package Manager client is installed in your instance. Then execute:
+
+```objectscript
+    USER> zpm
+    zpm: USER> install opnlib-timer
+```
 ## How does it work?
 
 The concept is pretty easy. A process can _*subscribe*_ signal (Tokens) to a Timer defining the time at which the Timer should come back to the process signaling with that Token. Once the process is waken-up, it reviews the Token and take the appropiate actions executing a pre-defined logic.
 
 Let's show it with a very simple example:
 
-```javascript
+```objectscript
     Class OPNEx.IoT.Timer.BasicSample Extends %RegisteredObject
     {
         ClassMethod Test(pTimeOut as %Integer=20)
@@ -53,6 +77,15 @@ Let's show it with a very simple example:
 As you can see, you don't need to set anything up to start using Timers. Just call `Subscribe()` and, if it doesn't exist(\*), a new *tTimer* will be assigned for that $JOB-Token. The just created timer will start signaling that $JOB inmediately each *tPeriodMillisec*.
 
 (\*) If there are already Timers available with free slots, then that Timer will be taken to also serve this subscription
+
+## Test
+
+You have several sample classes in package `OPNEx.IoT.Timer`. Just execute:
+
+`do ##class(OPNEx.IoT.Timer.Basic).Test()` to see the sample above working
+`do ##class(OPNEx.IoT.Timer.Clocks).Test()` to see a clock, counter and count-down working together
+`do ##class(OPNEx.IoT.Timer.SimplePeriodicTask).Test()` to run the most simple test ever
+`do ##class(OPNEx.IoT.Timer.Sample).Test()` to see a sample that launches 4 or more timers that could be associated to different tasks
 
 ## Basic Actions/Methods
 
