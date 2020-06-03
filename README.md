@@ -70,4 +70,17 @@ Timers(pVerbose)| Returns a LIST with all the Timers currently active in the sys
 
 ---
 
-Have fun!
+## Behind the scene
+
+### Default Sizing Configuration
+
+The timers are processes that manage a subscription queue to know which signals have to send, when and to which other process. A particular timer process will manage several Timers without problems but we have to take into account that it will be running in a continous loop to check if there is any signal to send. That means that it will consume CPU cycles so we shouldn't have more timer processes than required, or even we would want to limit the number of these processes that we can have.
+Also, depending on the number of signals and frequency, we could have limitations regarding the capability of a timer process to accomplish its task of signaling on time. For that reason, we could want to limit the maximum number of subscriptions/signals associated with a timer process.
+
+We can stablish all these parameters in `OPNLib.IoT.Timer.inc`
+
+### Storing the subscriptions
+
+All the info about the timers' subscriptions together with dynamic info when they're running is stored in two globals: _^OPNLIBTIMER_ and _^OPNLIBTIMERIDX_. You shouldn't mess with them manually.
+
+*Have fun!*

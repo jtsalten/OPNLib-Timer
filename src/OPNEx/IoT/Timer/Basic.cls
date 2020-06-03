@@ -24,7 +24,7 @@ ClassMethod Test(pTimeOut As %Integer = 20)
 
         set tData = $List(tListOfData,2)
         //Here we could execute a task depending on the data/token
-        write !,"Token received....["_$piece($h,",",2)_"]: "_tData
+        write !,"Token received....["_$zt($piece($h,",",2))_"]: "_tData
 
         //If we receive EndMsg or reach TimeOut then Stop test
         if (tData[tEndMsg)||(($p($h,",",2)-tStart) > pTimeOut)

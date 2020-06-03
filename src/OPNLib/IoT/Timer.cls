@@ -163,29 +163,36 @@ ClassMethod Subscribe(ByRef pPIDTimer As %Integer = 0, pPIDSubscriber As %Intege
 	return 0
 }
 
-ClassMethod SaveSubscription(pPIDTimer As %Integer, pPIDSubscriber As %Integer, pToken As %String, pPeriod As %Integer, pEndingMessage As %String = "")
+ClassMethod SaveSubscription(pPIDTimer As %Integer, pPIDSubscriber As %Integer, pToken As %String, pPeriod As %Integer, pEndingMessage As %String = "") As %Integer
 {
 	// Save the new subscription
-	
-	lock +^OPNLIBTIMER(pPIDTimer,"subs",pPIDSubscriber,pToken):5
-	if $TEST 
-	{
-		set ^OPNLIBTIMER(pPIDTimer)=$I(^OPNLIBTIMER(pPIDTimer))
-		//transform pPeriod to seconds
-		set ^OPNLIBTIMER(pPIDTimer,"subs",pPIDSubscriber,pToken)=(pPeriod/1000)_":"_($now()*100000+$p($now(),",",2))
-		set ^OPNLIBTIMER(pPIDTimer,"endMsg",pPIDSubscriber,pToken)=pEndingMessage
-		
-		// Store reverse idx to find the PICTimer easier: by subscriber+token and by token+subscriber
-		set ^OPNLIBTIMERIDX("subs",pPIDSubscriber,pToken,pPIDTimer)=""
-		set ^OPNLIBTIMERIDX("token",pToken,pPIDSubscriber,pPIDTimer)=""
-		lock -^OPNLIBTIMER(pPIDTimer,"subs",pPIDSubscriber,pToken)
+	#dim e as %Exception.SystemException
 
+	try 
+	{
+		if ..Lock(pPIDTimer,pPIDSubscriber,pToken)
+		{
+			set ^OPNLIBTIMER(pPIDTimer)=$I(^OPNLIBTIMER(pPIDTimer))
+			//transform pPeriod to seconds
+			set ^OPNLIBTIMER(pPIDTimer,"subs",pPIDSubscriber,pToken)=(pPeriod/1000)_":"_($now()*100000+$p($now(),",",2))
+			set ^OPNLIBTIMER(pPIDTimer,"endMsg",pPIDSubscriber,pToken)=pEndingMessage
+			
+			// Store reverse idx to find the PICTimer easier: by subscriber+token and by token+subscriber
+			set ^OPNLIBTIMERIDX("subs",pPIDSubscriber,pToken,pPIDTimer)=""
+			set ^OPNLIBTIMERIDX("token",pToken,pPIDSubscriber,pPIDTimer)=""
+			do ..UnLock(pPIDTimer,pPIDSubscriber,pToken)
+		}
+		else 
+		{
+			set pPIDTimer = 0
+		}
 	}
-	else 
+	catch e
 	{
 		set pPIDTimer = 0
+		do ..UnLock(pPIDTimer,pPIDSubscriber,pToken)	
 	}
-	
+		
 	return pPIDTimer
 }
 

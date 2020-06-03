@@ -25,7 +25,7 @@ Property TkSep As %String [ InitialExpression = ":" ];
 Property Map As %String [ MultiDimensional ];
 
 /// Clocks Sample will initiate a Clock that will stop after pClockTime seconds, a CountDown of pCountDown seconds and a Cronometer that will finish after pCronometer
-ClassMethod Test(pClockTime As %Integer = 60, pCDTime As %Integer = 20, pCronoTime As %Integer = 10) As %Status
+ClassMethod Test(pClockTime As %Integer = 30, pCDTime As %Integer = 20, pCronoTime As %Integer = 10) As %Status
 {
 	#dim tClockSet as OPNEx.IoT.Timer.Clocks = ..%New()
 	#dim tTkSep as %String = tClockSet.TkSep
@@ -193,9 +193,9 @@ Method Display() As %String
 {
 	w #
 	w !,!,!,!,!
-	w ?10,"CLOCK",?22,"COUNTDOWN",?38,"CRONOMETER"
+	w ?5,"CLOCK [alarm: "_$get(..Map("TMCLOCK","alarm"),"")_"]",?30,"COUNTDOWN",?45,"CRONOMETER [up to: "_$get(..Map("TMCRONOMETER","max"),"")_"]"
 	w !
-	w ?10,$zt($get(..Map("TMCLOCK","val"),$p($h,",",2))),?22,$get(..Map("TMCOUNTDOWN","val"),""),?38,$get(..Map("TMCRONOMETER","val"),"")
+	w ?8,$zt($get(..Map("TMCLOCK","val"),$p($h,",",2))),?30,$get(..Map("TMCOUNTDOWN","val"),""),?45,$get(..Map("TMCRONOMETER","val"),"")
 	quit
 }
 
