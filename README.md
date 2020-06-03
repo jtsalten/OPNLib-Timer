@@ -8,6 +8,7 @@ This functionality can be easily integrated in our logic using the %SYSTEM.Event
 ## Install
 
 ### Local IRIS instance
+<<<<<<< HEAD
 
 Just load an compile the class `OPNLib.IoT.Timer`. 
 
@@ -33,14 +34,40 @@ Be sure the ObjectScript Package Manager client is installed in your instance. T
     USER> zpm
     zpm: USER> install opnlib-timer
 ```
+=======
+>>>>>>> ec73704d81139e462cb98b02fe140bda247e98dd
 
+Just load an compile the class `OPNLib.IoT.Timer`. 
+
+`do $system.OBJ.Load("<yourpathtofile.xml"","ck">)`
+
+If you want to look at some examples, also load and compile the `OPNEx.IoT.Timer.*`classes. There you have several examples and approaches to leverage this functionality.
+
+### Containers
+
+Clone/git pull the repo into any local directory
+
+`$ git clone https://github.com/your-repository.git`
+
+Open the terminal in this directory and run:
+
+`$ docker-compose up -d`
+
+### Pakage Manager
+
+Be sure the ObjectScript Package Manager client is installed in your instance. Then execute:
+
+```objectscript
+    USER> zpm
+    zpm: USER> install opnlib-timer
+```
 ## How does it work?
 
 The concept is pretty easy. A process can _*subscribe*_ signal (Tokens) to a Timer defining the time at which the Timer should come back to the process signaling with that Token. Once the process is waken-up, it reviews the Token and take the appropiate actions executing a pre-defined logic.
 
 Let's show it with a very simple example:
 
-```javascript
+```objectscript
     Class OPNEx.IoT.Timer.BasicSample Extends %RegisteredObject
     {
         ClassMethod Test(pTimeOut as %Integer=20)
