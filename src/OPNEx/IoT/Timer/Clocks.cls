@@ -69,7 +69,7 @@ ClassMethod Test(pClockTime As %Integer = 30, pCDTime As %Integer = 20, pCronoTi
 	set tClockSet.CountDownTimer = ##class(OPNLib.IoT.Timer).UnSubscribe(tClockSet.CountDownTimer,$JOB,"TMCOUNTDOWN")
 	set tClockSet.CronometerTimer = ##class(OPNLib.IoT.Timer).UnSubscribe(tClockSet.CronometerTimer,$JOB,"TMCRONOMETER")
 	set tClockSet.AdminTimer = ##class(OPNLib.IoT.Timer).UnSubscribe(tClockSet.AdminTimer,$JOB,tClockSet.AdminSignal)
-	quit
+	quit $$$OK
 }
 
 /// Stop all subscriptions for this sample. Asssuming default names for the signals
@@ -185,7 +185,7 @@ Method Cronometer() As %Integer
 	return tTimePassed
 }
 
-Method Display() As %String
+Method Display()
 {
 	w #
 	w !,!,!,!,!
