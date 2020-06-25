@@ -39,7 +39,7 @@ ClassMethod BGTest(pTasks As %Integer = 4, pToken As %String = "")
 /// will creates Timers as needed
 Method Test(pTasks As %Integer = 4, pToken As %String = "") As %Status
 {
-	#dim tTaskNum, tCnt, tSlots, tTimer as %Integer=0
+	#dim tCnt, tSlots, tTimer as %Integer=0
 	#dim tTaskLabel as %String=""
 	#dim tStopTokenDummyTask as %String = "##STOP"
 	#dim tPeriod as %Integer=500
@@ -118,7 +118,6 @@ Method UnsubscribeAllTasks() As %Status
 /// It keeps Waiting for signals for ever of till the EndToken from AdminSignal is received
 Method ReceiveInfo(pTkSep As %String = ":") As %Status
 {
-	#dim tMsg as %String=""
 	#dim tInfo as %List
 	#dim tStopToken as %Boolean=0
 	#dim tSignalID as %String=""
