@@ -126,9 +126,7 @@ Method ReceiveInfo(pTkSep As %String = ":") As %Status
 	while 'tStopToken 
 	{
 		set tInfo = $system.Event.WaitMsg()
-		
-		//trace w !,$List(tInfo,1)_" ** "_$List(tInfo,2)
-		
+			
 		set tSignalID = $piece($List(tInfo,2),pTkSep)
 		if (tSignalID = ..AdminSignal)
 		{
@@ -137,8 +135,6 @@ Method ReceiveInfo(pTkSep As %String = ":") As %Status
 		}
 		else
 		{
-			//trace write !,$zt($p($h,",",2))_"."_$p($now(),".",2)_" ** Receiving signal to run... "_$p(tSignalID,"##")
-			
 			set ..Map(..AdminSignal,"val")=tSignalID	
 			set:tSignalID'="" ..Map(tSignalID,"val") = $method($this,$get(..Map(tSignalID,"method"),"Dummy"),$List(tInfo,2))
 		}
