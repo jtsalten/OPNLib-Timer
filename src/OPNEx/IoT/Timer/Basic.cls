@@ -5,7 +5,7 @@ ClassMethod Test(pTimeOut As %Integer = 20)
 {
     #dim tStop, tSlots as %Integer=0
     #dim tTimer as %Integer = ##class(OPNLib.IoT.Timer).GetTimerFree(.tSlots)
-    #dim tStart as %Integer = $piece($h,",",2)
+    #dim tInit as %Integer = $piece($h,",",2)
     #dim tEndMsg as %String = "##CLOSING"
     #dim tPeriodMillisec as %Integer = 1000
     #dim tToken as %String = "BASICTOKEN001"
@@ -27,7 +27,7 @@ ClassMethod Test(pTimeOut As %Integer = 20)
         write !,"Token received....["_$zt($piece($h,",",2))_"]: "_tData
 
         //If we receive EndMsg or reach TimeOut then Stop test
-        if (tData[tEndMsg)||(($p($h,",",2)-tStart) > pTimeOut)
+        if (tData[tEndMsg)||(($p($h,",",2)-tInit) > pTimeOut)
         {
             set tStop = 1
             do ##class(OPNLib.IoT.Timer).UnSubscribe(,$JOB)

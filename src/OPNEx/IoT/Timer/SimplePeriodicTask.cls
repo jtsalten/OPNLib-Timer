@@ -9,7 +9,7 @@ ClassMethod Test(pTimeLapse As %Integer = 20)
 	#dim tMsg as %String=""
 	#dim tEndMsg as %String=":##CLOSING"
 	#dim tTokenID as %String="BASIC"_$random(9999)
-	#dim tStart, tRightNow as %Decimal=$piece($now(),",",2)
+	#dim tInit, tRightNow as %Decimal=$piece($now(),",",2)
 	
 	do $system.Event.Clear($JOB)
 	
@@ -21,7 +21,7 @@ ClassMethod Test(pTimeLapse As %Integer = 20)
 		set tMsg = $system.Event.WaitMsg()
 		set tRightNow = $piece($now(),",",2)
 		
-		set tStop = ($List(tMsg,2)[tEndMsg)||((tRightNow-tStart)>pTimeLapse)
+		set tStop = ($List(tMsg,2)[tEndMsg)||((tRightNow-tInit)>pTimeLapse)
 		if tStop
 		{
 			write !,"Stopping..... Bye!"

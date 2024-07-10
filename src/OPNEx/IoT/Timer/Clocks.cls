@@ -29,9 +29,7 @@ ClassMethod Test(pClockTime As %Integer = 30, pCDTime As %Integer = 20, pCronoTi
 {
 	#dim tClockSet as OPNEx.IoT.Timer.Clocks = ..%New()
 	#dim tTkSep as %String = tClockSet.TkSep
-	#dim tCnt as %Integer=0
 	#dim tTimer,tSlots as %Integer=0
-	#dim tMap
 
 	// It clears whatever other signal pending for this $JOB
 	do $system.Event.Clear($JOB)
@@ -71,7 +69,7 @@ ClassMethod Test(pClockTime As %Integer = 30, pCDTime As %Integer = 20, pCronoTi
 	set tClockSet.CountDownTimer = ##class(OPNLib.IoT.Timer).UnSubscribe(tClockSet.CountDownTimer,$JOB,"TMCOUNTDOWN")
 	set tClockSet.CronometerTimer = ##class(OPNLib.IoT.Timer).UnSubscribe(tClockSet.CronometerTimer,$JOB,"TMCRONOMETER")
 	set tClockSet.AdminTimer = ##class(OPNLib.IoT.Timer).UnSubscribe(tClockSet.AdminTimer,$JOB,tClockSet.AdminSignal)
-	quit
+	quit $$$OK
 }
 
 /// Stop all subscriptions for this sample. Asssuming default names for the signals
@@ -88,7 +86,6 @@ ClassMethod StopTest()
 /// It keeps Waiting for signals for ever of till a pEndToken for a particular pCtrlSignal is received
 Method ReceiveInfo()
 {
-	#dim tMsg as %String=""
 	#dim tInfo as %List
 	#dim tStopToken as %Boolean=0
 	#dim tSignalID as %String=""
@@ -172,7 +169,6 @@ Method Cronometer() As %Integer
 {
 	// This CRONOMETER is supposed to be initialized to $now() when started
 	#dim tInit as %Integer=$get(..Map("TMCRONOMETER","init"),0)
-	#dim tTimer as %Integer=$get(..Map("TMCRONOMETER","timer"),0)
 	#dim tTimePassed as %Integer=($p($now(),",",2) - tInit)
 
 	if tTimePassed '< $get(..Map("TMCRONOMETER","max"),0) set tTimePassed = $get(..Map("TMCRONOMETER","max"),0)
@@ -189,7 +185,7 @@ Method Cronometer() As %Integer
 	return tTimePassed
 }
 
-Method Display() As %String
+Method Display()
 {
 	w #
 	w !,!,!,!,!
